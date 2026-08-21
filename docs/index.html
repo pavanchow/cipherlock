@@ -2,11 +2,258 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>cipherlock</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cipherlock: ChaCha20-Poly1305 authenticated encryption you can read</title>
+<meta name="description" content="Cipherlock is a single-binary toolkit implementing ChaCha20-Poly1305 authenticated encryption from scratch in Rust. Encrypt and decrypt files with a passphrase, and read exactly how the AEAD works.">
+<meta name="author" content="Pavan Nallamothu">
+<link rel="canonical" href="https://pavanchow.github.io/cipherlock/">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Cipherlock: ChaCha20-Poly1305 Authenticated Encryption You Can Read">
+<meta property="og:description" content="A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors.">
+<meta property="og:url" content="https://pavanchow.github.io/cipherlock/">
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Cipherlock: ChaCha20-Poly1305 Authenticated Encryption You Can Read">
+<meta name="twitter:description" content="A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors.">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Cipherlock",
+  "applicationCategory": "SecurityApplication",
+  "operatingSystem": "Linux, macOS, Windows",
+  "description": "A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors.",
+  "author": {
+    "@type": "Person",
+    "name": "Pavan Nallamothu"
+  },
+  "url": "https://pavanchow.github.io/cipherlock/",
+  "codeRepository": "https://github.com/pavanchow/cipherlock",
+  "license": "https://opensource.org/licenses/MIT",
+  "programmingLanguage": "Rust"
+}
+</script>
+
+<style>
+  :root {
+    --accent: #2f6fed;
+    --ink: #16181d;
+    --muted: #5b616e;
+    --line: #e7e9ee;
+    --bg: #ffffff;
+    --panel: #fafbfc;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--accent); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .wrap {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 0 28px;
+  }
+  header {
+    padding: 96px 0 64px;
+    text-align: center;
+  }
+  .kicker {
+    display: inline-block;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 600;
+    margin-bottom: 18px;
+  }
+  h1 {
+    font-size: 44px;
+    line-height: 1.15;
+    margin: 0 0 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .lede {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--muted);
+    max-width: 620px;
+    margin: 0 auto 32px;
+  }
+  .cta-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 12px 22px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 15px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { text-decoration: none; opacity: 0.9; }
+  .btn-secondary {
+    background: var(--panel);
+    color: var(--ink);
+    border: 1px solid var(--line);
+  }
+  .btn-secondary:hover { text-decoration: none; border-color: var(--accent); }
+
+  section { padding: 56px 0; border-top: 1px solid var(--line); }
+  h2 {
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 700;
+    margin: 0 0 32px;
+    text-align: center;
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 26px;
+  }
+  .card .num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .card h3 {
+    font-size: 17px;
+    margin: 0 0 10px;
+  }
+  .card p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--muted);
+    margin: 0;
+  }
+
+  pre {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 20px 22px;
+    overflow-x: auto;
+    font-size: 14px;
+    line-height: 1.7;
+  }
+  code {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  .note {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px 26px;
+    font-size: 14.5px;
+    line-height: 1.7;
+    color: var(--muted);
+  }
+  .note strong { color: var(--ink); }
+
+  footer {
+    padding: 48px 0 80px;
+    text-align: center;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  footer a { color: var(--muted); text-decoration: underline; }
+
+  @media (max-width: 680px) {
+    header { padding: 64px 0 48px; }
+    h1 { font-size: 32px; }
+    .steps { grid-template-columns: 1fr; }
+  }
+</style>
 </head>
 <body>
-<h1>cipherlock</h1>
-<p>Site coming soon.</p>
-<p><a href="https://github.com/pavanchow/cipherlock">View repository</a></p>
+<noscript>
+  <p>Cipherlock is a single-binary ChaCha20-Poly1305 authenticated encryption toolkit implemented from scratch in Rust. It encrypts and decrypts files with a passphrase, and its source is written to be read so you can see exactly how the AEAD works.</p>
+</noscript>
+
+<div class="wrap">
+  <header>
+    <span class="kicker">Rust · From scratch · RFC 8439</span>
+    <h1>ChaCha20-Poly1305 authenticated encryption you can actually read</h1>
+    <p class="lede">Cipherlock is a single binary that implements a real modern AEAD, ChaCha20-Poly1305, from scratch. Use it to encrypt and decrypt files with a passphrase, or read the source to see exactly how authenticated encryption works.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="https://github.com/pavanchow/cipherlock">View on GitHub</a>
+      <a class="btn btn-secondary" href="#how-it-works">How it works</a>
+    </div>
+  </header>
+
+  <section id="how-it-works">
+    <h2>How it works</h2>
+    <div class="steps">
+      <div class="card">
+        <span class="num">1</span>
+        <h3>ChaCha20</h3>
+        <p>A stream cipher that expands a 256 bit key, a 96 bit nonce, and a counter into a keystream using 20 rounds of add rotate xor quarter rounds. XORed with the plaintext, it produces the ciphertext.</p>
+      </div>
+      <div class="card">
+        <span class="num">2</span>
+        <h3>Poly1305</h3>
+        <p>A one time message authenticator. A fresh key is derived from ChaCha20 for every message, and the authenticator produces a 128 bit tag over the ciphertext and any associated data.</p>
+      </div>
+      <div class="card">
+        <span class="num">3</span>
+        <h3>AEAD</h3>
+        <p>The two are combined into AEAD_CHACHA20_POLY1305: encrypt, then authenticate. Decryption verifies the tag before releasing any plaintext, so a wrong passphrase or a tampered file fails loudly instead of silently.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="usage">
+    <h2>Usage</h2>
+    <pre><code>cargo build --release
+
+cipherlock encrypt secret.txt secret.txt.lock --pass "correct horse battery staple"
+
+cipherlock decrypt secret.txt.lock secret.txt --pass "correct horse battery staple"</code></pre>
+  </section>
+
+  <section id="proof">
+    <h2>Proof of correctness</h2>
+    <div class="note">
+      <strong>Every primitive is checked against the official RFC 8439 known answer test vectors:</strong> the ChaCha20 block function vector, the ChaCha20 encryption vector, the Poly1305 vector, and the full AEAD vector. All four pass under <code>cargo test</code>, alongside an encrypt then decrypt roundtrip test and a tamper detection test that flips a ciphertext byte and confirms decryption fails. This is a correct, teaching grade tool. It is not a substitute for an audited cryptography library in production.
+    </div>
+  </section>
+
+  <footer>
+    <p>By Pavan Nallamothu. <a href="https://github.com/pavanchow/cipherlock">Source on GitHub</a></p>
+  </footer>
+</div>
 </body>
 </html>
