@@ -1,0 +1,18 @@
+[package]
+name = "cipherlock"
+version = "0.1.0"
+edition = "2021"
+description = "A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch and proven against the RFC 8439 test vectors."
+license = "MIT"
+
+[[bin]]
+name = "cipherlock"
+path = "src/main.rs"
+
+[lib]
+name = "cipherlock"
+path = "src/lib.rs"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+getrandom = "0.2"
