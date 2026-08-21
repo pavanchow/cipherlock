@@ -15,9 +15,9 @@ fn mac_data(aad: &[u8], ciphertext: &[u8]) -> Vec<u8> {
         aad.len() + pad16_len(aad.len()) + ciphertext.len() + pad16_len(ciphertext.len()) + 16,
     );
     data.extend_from_slice(aad);
-    data.extend(std::iter::repeat(0u8).take(pad16_len(aad.len())));
+    data.extend(std::iter::repeat_n(0u8, pad16_len(aad.len())));
     data.extend_from_slice(ciphertext);
-    data.extend(std::iter::repeat(0u8).take(pad16_len(ciphertext.len())));
+    data.extend(std::iter::repeat_n(0u8, pad16_len(ciphertext.len())));
     data.extend_from_slice(&(aad.len() as u64).to_le_bytes());
     data.extend_from_slice(&(ciphertext.len() as u64).to_le_bytes());
     data
