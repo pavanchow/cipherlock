@@ -196,6 +196,102 @@
     h1 { font-size: 32px; }
     .steps { grid-template-columns: 1fr; }
   }
+
+  .demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .demo-panel {
+    background: var(--panel);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    padding: 24px;
+  }
+  .demo-panel h3 {
+    font-size: 15px;
+    margin: 0 0 14px;
+  }
+  .demo-panel label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    margin: 14px 0 6px;
+  }
+  .demo-panel label:first-of-type { margin-top: 0; }
+  .demo-panel textarea,
+  .demo-panel input[type="text"],
+  .demo-panel input[type="password"] {
+    width: 100%;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: #fff;
+    color: var(--ink);
+    resize: vertical;
+  }
+  .demo-panel textarea:focus,
+  .demo-panel input:focus {
+    outline: none;
+    border-color: var(--accent);
+  }
+  .demo-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .demo-btn {
+    border: none;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .demo-btn-primary { background: var(--accent); color: #fff; }
+  .demo-btn-primary:hover { opacity: 0.9; }
+  .demo-btn-secondary { background: #fff; color: var(--ink); border: 1px solid var(--line); }
+  .demo-btn-secondary:hover { border-color: var(--accent); }
+  .demo-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .demo-field {
+    word-break: break-all;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12.5px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--ink);
+    min-height: 20px;
+  }
+  .demo-status {
+    margin-top: 14px;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 20px;
+  }
+  .demo-status.ok { color: #1a7f37; }
+  .demo-status.fail { color: #c62828; }
+  .demo-status.busy { color: var(--muted); }
+  .demo-plaintext-out {
+    margin-top: 14px;
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    font-size: 14px;
+    white-space: pre-wrap;
+    word-break: break-word;
+    min-height: 20px;
+  }
+
+  @media (max-width: 680px) {
+    .demo-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -213,6 +309,53 @@
       <a class="btn btn-secondary" href="#how-it-works">How it works</a>
     </div>
   </header>
+
+  <section id="try-it">
+    <h2>Try it in your browser</h2>
+    <p style="text-align:center; font-size: 14.5px; color: var(--muted); margin: -14px 0 28px;">
+      This is a second, independent implementation of the same ChaCha20-Poly1305 construction, written in plain JavaScript and running entirely on this page. Nothing you type here leaves your browser.
+    </p>
+    <div class="demo-grid">
+      <div class="demo-panel">
+        <h3>Encrypt</h3>
+        <label for="demo-plaintext">Plaintext</label>
+        <textarea id="demo-plaintext" rows="4">the plans are in the drawer, meet at dawn</textarea>
+        <label for="demo-pass-enc">Passphrase</label>
+        <input type="text" id="demo-pass-enc" value="correct horse battery staple">
+        <div class="demo-row">
+          <button class="demo-btn demo-btn-primary" id="demo-encrypt-btn">Encrypt</button>
+        </div>
+        <div class="demo-status" id="demo-encrypt-status"></div>
+        <label>Salt (16 bytes)</label>
+        <div class="demo-field" id="demo-out-salt">&nbsp;</div>
+        <label>Nonce (12 bytes)</label>
+        <div class="demo-field" id="demo-out-nonce">&nbsp;</div>
+        <label>Ciphertext</label>
+        <div class="demo-field" id="demo-out-cipher">&nbsp;</div>
+        <label>Poly1305 tag (16 bytes)</label>
+        <div class="demo-field" id="demo-out-tag">&nbsp;</div>
+      </div>
+      <div class="demo-panel">
+        <h3>Decrypt</h3>
+        <label for="demo-pass-dec">Passphrase</label>
+        <input type="text" id="demo-pass-dec" value="correct horse battery staple">
+        <label for="demo-in-salt">Salt (hex)</label>
+        <input type="text" id="demo-in-salt">
+        <label for="demo-in-nonce">Nonce (hex)</label>
+        <input type="text" id="demo-in-nonce">
+        <label for="demo-in-cipher">Ciphertext (hex)</label>
+        <input type="text" id="demo-in-cipher">
+        <label for="demo-in-tag">Tag (hex)</label>
+        <input type="text" id="demo-in-tag">
+        <div class="demo-row">
+          <button class="demo-btn demo-btn-primary" id="demo-decrypt-btn">Decrypt</button>
+          <button class="demo-btn demo-btn-secondary" id="demo-tamper-btn">Tamper and decrypt</button>
+        </div>
+        <div class="demo-status" id="demo-decrypt-status"></div>
+        <div class="demo-plaintext-out" id="demo-decrypt-out">&nbsp;</div>
+      </div>
+    </div>
+  </section>
 
   <section id="how-it-works">
     <h2>How it works</h2>
@@ -255,5 +398,296 @@ cipherlock decrypt secret.txt.lock secret.txt --pass "correct horse battery stap
     <p>By Pavan Nallamothu. <a href="https://github.com/pavanchow/cipherlock">Source on GitHub</a></p>
   </footer>
 </div>
+
+<script>
+(function () {
+  "use strict";
+
+  function readU32LE(b, o) { return (b[o] | (b[o + 1] << 8) | (b[o + 2] << 16) | (b[o + 3] << 24)) >>> 0; }
+  function writeU32LE(out, o, v) { out[o] = v & 0xff; out[o + 1] = (v >>> 8) & 0xff; out[o + 2] = (v >>> 16) & 0xff; out[o + 3] = (v >>> 24) & 0xff; }
+  function rotl(x, n) { return ((x << n) | (x >>> (32 - n))) >>> 0; }
+  function hexToBytes(hex) {
+    hex = hex.replace(/\s+/g, "");
+    if (hex.length % 2 !== 0) return null;
+    const out = new Uint8Array(hex.length / 2);
+    for (let i = 0; i < out.length; i++) {
+      const byte = hex.substr(i * 2, 2);
+      if (!/^[0-9a-fA-F]{2}$/.test(byte)) return null;
+      out[i] = parseInt(byte, 16);
+    }
+    return out;
+  }
+  function bytesToHex(b) { return Array.from(b, function (x) { return x.toString(16).padStart(2, "0"); }).join(""); }
+  function concatBytes(parts) {
+    let len = 0;
+    for (const p of parts) len += p.length;
+    const out = new Uint8Array(len);
+    let o = 0;
+    for (const p of parts) { out.set(p, o); o += p.length; }
+    return out;
+  }
+  function bytesToBigIntLE(b) {
+    let n = 0n;
+    for (let i = b.length - 1; i >= 0; i--) n = (n << 8n) | BigInt(b[i]);
+    return n;
+  }
+  function bigIntToBytesLE(n, len) {
+    const out = new Uint8Array(len);
+    for (let i = 0; i < len; i++) { out[i] = Number(n & 0xffn); n >>= 8n; }
+    return out;
+  }
+
+  // ChaCha20, RFC 8439 section 2.3 and 2.4.
+  const CHACHA_CONST = [0x61707865, 0x3320646e, 0x79622d32, 0x6b206574];
+
+  function quarterRound(s, a, b, c, d) {
+    s[a] = (s[a] + s[b]) >>> 0; s[d] ^= s[a]; s[d] = rotl(s[d], 16);
+    s[c] = (s[c] + s[d]) >>> 0; s[b] ^= s[c]; s[b] = rotl(s[b], 12);
+    s[a] = (s[a] + s[b]) >>> 0; s[d] ^= s[a]; s[d] = rotl(s[d], 8);
+    s[c] = (s[c] + s[d]) >>> 0; s[b] ^= s[c]; s[b] = rotl(s[b], 7);
+  }
+
+  function chachaBlock(key32, counter, nonce12) {
+    const state = new Uint32Array(16);
+    state[0] = CHACHA_CONST[0]; state[1] = CHACHA_CONST[1]; state[2] = CHACHA_CONST[2]; state[3] = CHACHA_CONST[3];
+    for (let i = 0; i < 8; i++) state[4 + i] = readU32LE(key32, i * 4);
+    state[12] = counter >>> 0;
+    for (let i = 0; i < 3; i++) state[13 + i] = readU32LE(nonce12, i * 4);
+    const initial = state.slice();
+    for (let i = 0; i < 10; i++) {
+      quarterRound(state, 0, 4, 8, 12);
+      quarterRound(state, 1, 5, 9, 13);
+      quarterRound(state, 2, 6, 10, 14);
+      quarterRound(state, 3, 7, 11, 15);
+      quarterRound(state, 0, 5, 10, 15);
+      quarterRound(state, 1, 6, 11, 12);
+      quarterRound(state, 2, 7, 8, 13);
+      quarterRound(state, 3, 4, 9, 14);
+    }
+    for (let i = 0; i < 16; i++) state[i] = (state[i] + initial[i]) >>> 0;
+    const out = new Uint8Array(64);
+    for (let i = 0; i < 16; i++) writeU32LE(out, i * 4, state[i]);
+    return out;
+  }
+
+  function chachaXor(key32, counter, nonce12, data) {
+    const out = new Uint8Array(data.length);
+    for (let off = 0, blk = 0; off < data.length; off += 64, blk++) {
+      const ks = chachaBlock(key32, (counter + blk) >>> 0, nonce12);
+      const end = Math.min(off + 64, data.length);
+      for (let i = off; i < end; i++) out[i] = data[i] ^ ks[i - off];
+    }
+    return out;
+  }
+
+  // Poly1305, RFC 8439 section 2.5, computed over BigInt mod 2^130 - 5.
+  function poly1305Mac(key32, msg) {
+    const rBytes = key32.slice(0, 16).slice();
+    rBytes[3] &= 15; rBytes[7] &= 15; rBytes[11] &= 15; rBytes[15] &= 15;
+    rBytes[4] &= 252; rBytes[8] &= 252; rBytes[12] &= 252;
+    const r = bytesToBigIntLE(rBytes);
+    const s = bytesToBigIntLE(key32.slice(16, 32));
+    const p = (1n << 130n) - 5n;
+    let acc = 0n;
+    for (let i = 0; i < msg.length; i += 16) {
+      const chunk = msg.slice(i, i + 16);
+      let n = bytesToBigIntLE(chunk);
+      n |= (1n << BigInt(8 * chunk.length));
+      acc = (acc + n) * r % p;
+    }
+    acc = (acc + s) % (1n << 128n);
+    return bigIntToBytesLE(acc, 16);
+  }
+
+  // AEAD_CHACHA20_POLY1305, RFC 8439 section 2.8.
+  function pad16(len) { return (16 - (len % 16)) % 16; }
+  function macData(aad, ciphertext) {
+    return concatBytes([
+      aad, new Uint8Array(pad16(aad.length)),
+      ciphertext, new Uint8Array(pad16(ciphertext.length)),
+      bigIntToBytesLE(BigInt(aad.length), 8),
+      bigIntToBytesLE(BigInt(ciphertext.length), 8)
+    ]);
+  }
+  function polyKey(key32, nonce12) { return chachaBlock(key32, 0, nonce12).slice(0, 32); }
+  function aeadSeal(key32, nonce12, aad, plaintext) {
+    const otk = polyKey(key32, nonce12);
+    const ciphertext = chachaXor(key32, 1, nonce12, plaintext);
+    const tag = poly1305Mac(otk, macData(aad, ciphertext));
+    return { ciphertext: ciphertext, tag: tag };
+  }
+  function constantTimeEq(a, b) {
+    if (a.length !== b.length) return false;
+    let diff = 0;
+    for (let i = 0; i < a.length; i++) diff |= a[i] ^ b[i];
+    return diff === 0;
+  }
+  function aeadOpen(key32, nonce12, aad, ciphertext, tag) {
+    const otk = polyKey(key32, nonce12);
+    const expected = poly1305Mac(otk, macData(aad, ciphertext));
+    if (!constantTimeEq(expected, tag)) return null;
+    return chachaXor(key32, 1, nonce12, ciphertext);
+  }
+
+  // Passphrase KDF. Same construction as the Rust KDF in src/kdf.rs: mix the
+  // passphrase and salt into a key and nonce, then repeatedly run them
+  // through the ChaCha20 block function, feeding the output back in. Rounds
+  // are reduced from the CLI's 200,000 to keep this in-browser demo snappy,
+  // this stands in for a real password stretch and is not the CLI's exact
+  // timing.
+  const KDF_ROUNDS = 20000;
+  const SALT_LEN = 16;
+  const NONCE_LEN = 12;
+
+  function deriveKey(passphraseBytes, salt16) {
+    const key = new Uint8Array(32);
+    const nonce = new Uint8Array(NONCE_LEN);
+    for (let i = 0; i < passphraseBytes.length; i++) {
+      const b = passphraseBytes[i];
+      key[i % 32] ^= b;
+      nonce[i % NONCE_LEN] ^= (b + salt16[i % SALT_LEN]) & 0xff;
+    }
+    for (let i = 0; i < SALT_LEN; i++) key[(i + 7) % 32] ^= salt16[i];
+    for (let round = 0; round < KDF_ROUNDS; round++) {
+      const block = chachaBlock(key, round >>> 0, nonce);
+      for (let i = 0; i < 32; i++) key[i] ^= block[i];
+      for (let i = 0; i < NONCE_LEN; i++) nonce[i] ^= block[32 + i];
+    }
+    return key;
+  }
+
+  function randomBytes(n) {
+    const b = new Uint8Array(n);
+    crypto.getRandomValues(b);
+    return b;
+  }
+
+  // Self-check against the RFC 8439 section 2.8.2 AEAD test vector. Runs
+  // once on load so a broken port fails loudly in the console instead of
+  // silently producing wrong ciphertext.
+  function selfCheck() {
+    const key = hexToBytes("808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f");
+    const nonce = hexToBytes("070000004041424344454647");
+    const aad = hexToBytes("50515253c0c1c2c3c4c5c6c7");
+    const plaintext = new TextEncoder().encode("Ladies and Gentlemen of the class of '99: If I could offer you only one tip for the future, sunscreen would be it.");
+    const expectedCipher = "d31a8d34648e60db7b86afbc53ef7ec2a4aded51296e08fea9e2b5a736ee62d63dbea45e8ca9671282fafb69da92728b1a71de0a9e060b2905d6a5b67ecd3b3692ddbd7f2d778b8c9803aee328091b58fab324e4fad675945585808b4831d7bc3ff4def08e4b7a9de576d26586cec64b6116";
+    const expectedTag = "1ae10b594f09e26a7e902ecbd0600691";
+    const sealed = aeadSeal(key, nonce, aad, plaintext);
+    const ok = bytesToHex(sealed.ciphertext) === expectedCipher && bytesToHex(sealed.tag) === expectedTag;
+    if (ok) {
+      console.log("cipherlock demo: RFC 8439 section 2.8.2 AEAD vector matched");
+    } else {
+      console.error("cipherlock demo: RFC 8439 vector MISMATCH, the in-page implementation is broken");
+    }
+    return ok;
+  }
+  selfCheck();
+
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  const $ = function (id) { return document.getElementById(id); };
+  const encryptBtn = $("demo-encrypt-btn");
+  const decryptBtn = $("demo-decrypt-btn");
+  const tamperBtn = $("demo-tamper-btn");
+  const encStatus = $("demo-encrypt-status");
+  const decStatus = $("demo-decrypt-status");
+  const decOut = $("demo-decrypt-out");
+
+  function setStatus(el, text, cls) {
+    el.textContent = text;
+    el.className = "demo-status" + (cls ? " " + cls : "");
+  }
+
+  function doEncrypt() {
+    encryptBtn.disabled = true;
+    setStatus(encStatus, "Deriving key and encrypting...", "busy");
+    setTimeout(function () {
+      try {
+        const plaintext = new TextEncoder().encode($("demo-plaintext").value);
+        const passphrase = new TextEncoder().encode($("demo-pass-enc").value);
+        const salt = randomBytes(SALT_LEN);
+        const nonce = randomBytes(NONCE_LEN);
+        const key = deriveKey(passphrase, salt);
+        const sealed = aeadSeal(key, nonce, new Uint8Array(0), plaintext);
+
+        $("demo-out-salt").textContent = bytesToHex(salt);
+        $("demo-out-nonce").textContent = bytesToHex(nonce);
+        $("demo-out-cipher").textContent = bytesToHex(sealed.ciphertext);
+        $("demo-out-tag").textContent = bytesToHex(sealed.tag);
+
+        $("demo-in-salt").value = bytesToHex(salt);
+        $("demo-in-nonce").value = bytesToHex(nonce);
+        $("demo-in-cipher").value = bytesToHex(sealed.ciphertext);
+        $("demo-in-tag").value = bytesToHex(sealed.tag);
+        $("demo-pass-dec").value = $("demo-pass-enc").value;
+
+        setStatus(encStatus, "Encrypted. Nonce is fresh and random every time.", "ok");
+      } catch (e) {
+        setStatus(encStatus, "Encryption failed: " + e.message, "fail");
+      } finally {
+        encryptBtn.disabled = false;
+      }
+    }, 10);
+  }
+
+  function doDecrypt() {
+    decryptBtn.disabled = true;
+    setStatus(decStatus, "Deriving key and verifying tag...", "busy");
+    decOut.textContent = "";
+    setTimeout(function () {
+      try {
+        const salt = hexToBytes($("demo-in-salt").value);
+        const nonce = hexToBytes($("demo-in-nonce").value);
+        const ciphertext = hexToBytes($("demo-in-cipher").value);
+        const tag = hexToBytes($("demo-in-tag").value);
+        if (!salt || salt.length !== SALT_LEN) throw new Error("salt must be " + SALT_LEN + " hex bytes");
+        if (!nonce || nonce.length !== NONCE_LEN) throw new Error("nonce must be " + NONCE_LEN + " hex bytes");
+        if (!ciphertext) throw new Error("ciphertext is not valid hex");
+        if (!tag || tag.length !== 16) throw new Error("tag must be 16 hex bytes");
+
+        const passphrase = new TextEncoder().encode($("demo-pass-dec").value);
+        const key = deriveKey(passphrase, salt);
+        const recovered = aeadOpen(key, nonce, new Uint8Array(0), ciphertext, tag);
+
+        if (recovered === null) {
+          setStatus(decStatus, "Authentication failed: wrong passphrase or the ciphertext was tampered with", "fail");
+          decOut.textContent = "";
+        } else {
+          const text = new TextDecoder("utf-8", { fatal: false }).decode(recovered);
+          setStatus(decStatus, "Tag verified. Plaintext recovered.", "ok");
+          decOut.innerHTML = escapeHtml(text);
+        }
+      } catch (e) {
+        setStatus(decStatus, "Could not decrypt: " + e.message, "fail");
+      } finally {
+        decryptBtn.disabled = false;
+      }
+    }, 10);
+  }
+
+  function doTamper() {
+    const field = $("demo-in-cipher");
+    const bytes = hexToBytes(field.value);
+    if (!bytes || bytes.length === 0) {
+      setStatus(decStatus, "Encrypt something first, then tamper with it", "fail");
+      return;
+    }
+    bytes[0] ^= 0x01;
+    field.value = bytesToHex(bytes);
+    setStatus(decStatus, "Flipped one ciphertext bit. Decrypting should now fail.", "busy");
+    doDecrypt();
+  }
+
+  encryptBtn.addEventListener("click", doEncrypt);
+  decryptBtn.addEventListener("click", doDecrypt);
+  tamperBtn.addEventListener("click", doTamper);
+
+  doEncrypt();
+})();
+</script>
 </body>
 </html>
