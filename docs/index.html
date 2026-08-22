@@ -37,261 +37,93 @@
 </script>
 
 <style>
-  :root {
-    --accent: #2f6fed;
-    --ink: #16181d;
-    --muted: #5b616e;
-    --line: #e7e9ee;
-    --bg: #ffffff;
-    --panel: #fafbfc;
+  :root{
+    --accent:#2f6fed;--accent-soft:#eaf0fd;
+    --ink:#15161c;--muted:#6a6d78;--faint:#9a9dab;
+    --line:#ececed;--panel:#f7f7f9;--panel2:#fbfbfd;
+    --mono:ui-monospace,SFMono-Regular,Menlo,"SF Mono",monospace;
   }
-  * { box-sizing: border-box; }
-  html, body {
-    margin: 0;
-    padding: 0;
-    background: var(--bg);
-    color: var(--ink);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-  }
-  a { color: var(--accent); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .wrap {
-    max-width: 880px;
-    margin: 0 auto;
-    padding: 0 28px;
-  }
-  header {
-    padding: 96px 0 64px;
-    text-align: center;
-  }
-  .kicker {
-    display: inline-block;
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--accent);
-    font-weight: 600;
-    margin-bottom: 18px;
-  }
-  h1 {
-    font-size: 44px;
-    line-height: 1.15;
-    margin: 0 0 20px;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-  }
-  .lede {
-    font-size: 19px;
-    line-height: 1.6;
-    color: var(--muted);
-    max-width: 620px;
-    margin: 0 auto 32px;
-  }
-  .cta-row {
-    display: flex;
-    gap: 14px;
-    justify-content: center;
-    flex-wrap: wrap;
-  }
-  .btn {
-    display: inline-block;
-    padding: 12px 22px;
-    border-radius: 10px;
-    font-weight: 600;
-    font-size: 15px;
-  }
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-  }
-  .btn-primary:hover { text-decoration: none; opacity: 0.9; }
-  .btn-secondary {
-    background: var(--panel);
-    color: var(--ink);
-    border: 1px solid var(--line);
-  }
-  .btn-secondary:hover { text-decoration: none; border-color: var(--accent); }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:#fff;color:var(--ink);
+    font:17px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 28px}
+  a{color:var(--accent);text-decoration:none}a:hover{text-decoration:underline}
 
-  section { padding: 56px 0; border-top: 1px solid var(--line); }
-  h2 {
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--muted);
-    font-weight: 700;
-    margin: 0 0 32px;
-    text-align: center;
-  }
+  nav{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.82);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+  nav .row{display:flex;justify-content:space-between;align-items:center;height:56px;max-width:1040px;margin:0 auto;padding:0 28px}
+  nav .brand{display:flex;align-items:center;gap:9px;font-size:18px;font-weight:650;letter-spacing:-.01em}
+  nav .brand .gem{width:16px;height:16px;transform:rotate(45deg);border-radius:3px;background:linear-gradient(135deg,#7ea3f4,var(--accent))}
+  nav .links{display:flex;gap:26px;align-items:center}
+  nav .links a{color:var(--ink);font-size:14.5px}
+  @media(max-width:640px){nav .links a:not(.gh){display:none}}
 
-  .steps {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-  }
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 26px;
-  }
-  .card .num {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: var(--accent);
-    color: #fff;
-    font-size: 13px;
-    font-weight: 700;
-    margin-bottom: 16px;
-  }
-  .card h3 {
-    font-size: 17px;
-    margin: 0 0 10px;
-  }
-  .card p {
-    font-size: 14.5px;
-    line-height: 1.6;
-    color: var(--muted);
-    margin: 0;
-  }
+  .hero{padding:70px 0 30px;text-align:center}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+  h1{font-size:clamp(36px,6.4vw,60px);line-height:1.06;letter-spacing:-.03em;font-weight:680;margin:18px 0 0}
+  .hero p.sub{max-width:640px;margin:24px auto 0;font-size:clamp(17px,2.1vw,20px);color:var(--muted)}
+  .cta-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .btn{display:inline-block;padding:12px 24px;border-radius:999px;font-weight:600;font-size:15px}
+  .btn-primary{background:var(--ink);color:#fff}
+  .btn-primary:hover{text-decoration:none;background:var(--accent)}
+  .btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .btn-secondary:hover{text-decoration:none;border-color:var(--ink)}
 
-  pre {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 12px;
-    padding: 20px 22px;
-    overflow-x: auto;
-    font-size: 14px;
-    line-height: 1.7;
-  }
-  code {
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-  }
+  section{padding:88px 0;border-top:1px solid var(--line)}
+  h2{font-size:clamp(24px,3.6vw,34px);line-height:1.15;letter-spacing:-.02em;font-weight:660;text-align:center;max-width:760px;margin:0 auto}
+  .lead{max-width:620px;margin:16px auto 0;text-align:center;color:var(--muted);font-size:16px}
 
-  .note {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 24px 26px;
-    font-size: 14.5px;
-    line-height: 1.7;
-    color: var(--muted);
-  }
-  .note strong { color: var(--ink); }
+  .stage{max-width:900px;margin:44px auto 0;padding:0 28px}
+  .card{position:relative;background:linear-gradient(180deg,#fbfbff,#f4f4fb);border:1px solid var(--line);border-radius:22px;padding:30px;box-shadow:0 1px 0 #fff inset,0 18px 50px -30px rgba(40,40,90,.35)}
 
-  footer {
-    padding: 48px 0 80px;
-    text-align: center;
-    font-size: 14px;
-    color: var(--muted);
-  }
-  footer a { color: var(--muted); text-decoration: underline; }
-
-  @media (max-width: 680px) {
-    header { padding: 64px 0 48px; }
-    h1 { font-size: 32px; }
-    .steps { grid-template-columns: 1fr; }
-  }
-
-  .demo-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  .demo-panel {
-    background: var(--panel);
-    border: 1px solid var(--line);
-    border-radius: 14px;
-    padding: 24px;
-  }
-  .demo-panel h3 {
-    font-size: 15px;
-    margin: 0 0 14px;
-  }
-  .demo-panel label {
-    display: block;
-    font-size: 13px;
-    color: var(--muted);
-    margin: 14px 0 6px;
-  }
-  .demo-panel label:first-of-type { margin-top: 0; }
+  .demo-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+  .demo-panel{background:#fdfdff;border:1px solid var(--line);border-radius:16px;padding:22px}
+  .demo-panel h3{font-size:14.5px;margin:0 0 14px;font-family:var(--mono);letter-spacing:.02em;color:var(--ink)}
+  .demo-panel label{display:block;font-size:12.5px;color:var(--muted);margin:14px 0 6px}
+  .demo-panel label:first-of-type{margin-top:0}
   .demo-panel textarea,
   .demo-panel input[type="text"],
-  .demo-panel input[type="password"] {
-    width: 100%;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 12px;
-    font-size: 14px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    background: #fff;
-    color: var(--ink);
-    resize: vertical;
+  .demo-panel input[type="password"]{
+    width:100%;border:1px solid var(--line);border-radius:8px;padding:10px 12px;
+    font-size:14px;font-family:var(--mono);background:#fff;color:var(--ink);resize:vertical;
   }
-  .demo-panel textarea:focus,
-  .demo-panel input:focus {
-    outline: none;
-    border-color: var(--accent);
+  .demo-panel textarea:focus,.demo-panel input:focus{outline:none;border-color:var(--accent)}
+  .demo-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
+  .demo-btn{border:none;border-radius:999px;padding:10px 18px;font-weight:600;font-size:13.5px;cursor:pointer;font-family:inherit}
+  .demo-btn-primary{background:var(--ink);color:#fff}
+  .demo-btn-primary:hover{background:var(--accent)}
+  .demo-btn-secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+  .demo-btn-secondary:hover{border-color:var(--ink)}
+  .demo-btn:disabled{opacity:.5;cursor:not-allowed}
+  .demo-field{
+    word-break:break-all;font-family:var(--mono);font-size:12px;background:#fff;
+    border:1px solid var(--line);border-radius:8px;padding:10px 12px;color:var(--ink);min-height:20px;
   }
-  .demo-row {
-    display: flex;
-    gap: 10px;
-    margin-top: 16px;
-    flex-wrap: wrap;
+  .demo-status{margin-top:14px;font-size:13.5px;font-weight:600;min-height:20px}
+  .demo-status.ok{color:#1a7f37}
+  .demo-status.fail{color:#c62828}
+  .demo-status.busy{color:var(--muted)}
+  .demo-plaintext-out{
+    margin-top:14px;padding:12px 14px;background:#fff;border:1px solid var(--line);
+    border-radius:8px;font-size:14px;white-space:pre-wrap;word-break:break-word;min-height:20px;
   }
-  .demo-btn {
-    border: none;
-    border-radius: 10px;
-    padding: 10px 18px;
-    font-weight: 600;
-    font-size: 14px;
-    cursor: pointer;
-    font-family: inherit;
-  }
-  .demo-btn-primary { background: var(--accent); color: #fff; }
-  .demo-btn-primary:hover { opacity: 0.9; }
-  .demo-btn-secondary { background: #fff; color: var(--ink); border: 1px solid var(--line); }
-  .demo-btn-secondary:hover { border-color: var(--accent); }
-  .demo-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-  .demo-field {
-    word-break: break-all;
-    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-    font-size: 12.5px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    padding: 10px 12px;
-    color: var(--ink);
-    min-height: 20px;
-  }
-  .demo-status {
-    margin-top: 14px;
-    font-size: 14px;
-    font-weight: 600;
-    min-height: 20px;
-  }
-  .demo-status.ok { color: #1a7f37; }
-  .demo-status.fail { color: #c62828; }
-  .demo-status.busy { color: var(--muted); }
-  .demo-plaintext-out {
-    margin-top: 14px;
-    padding: 12px 14px;
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: 8px;
-    font-size: 14px;
-    white-space: pre-wrap;
-    word-break: break-word;
-    min-height: 20px;
-  }
+  .caption{text-align:center;font-family:var(--mono);font-size:12px;color:var(--faint);margin-top:22px}
 
-  @media (max-width: 680px) {
-    .demo-grid { grid-template-columns: 1fr; }
-  }
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;max-width:900px;margin:48px auto 0}
+  @media(max-width:720px){.steps{grid-template-columns:1fr}.demo-grid{grid-template-columns:1fr}}
+  .step{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .step .n{display:inline-flex;width:28px;height:28px;border-radius:8px;background:var(--accent-soft);color:var(--accent);align-items:center;justify-content:center;font:700 13px var(--mono);margin-bottom:12px}
+  .step h3{font-size:17px;margin-bottom:6px}
+  .step p{color:var(--muted);font-size:15px}
+
+  pre{background:#15161c;color:#ececf4;border-radius:14px;padding:20px 22px;font-family:var(--mono);font-size:13.5px;line-height:1.7;overflow-x:auto;max-width:640px;margin:40px auto 0}
+  code{font-family:var(--mono)}
+
+  .note{max-width:760px;margin:36px auto 0;background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:26px 28px;font-size:15px;line-height:1.7;color:var(--muted)}
+  .note strong{color:var(--ink)}
+
+  footer{padding:56px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
+  footer .name{color:var(--ink);font-weight:600}
 </style>
 </head>
 <body>
@@ -299,105 +131,117 @@
   <p>Cipherlock is a single-binary ChaCha20-Poly1305 authenticated encryption toolkit implemented from scratch in Rust. It encrypts and decrypts files with a passphrase, and its source is written to be read so you can see exactly how the AEAD works.</p>
 </noscript>
 
-<div class="wrap">
-  <header>
-    <span class="kicker">Rust · From scratch · RFC 8439</span>
-    <h1>ChaCha20-Poly1305 authenticated encryption you can actually read</h1>
-    <p class="lede">Cipherlock is a single binary that implements a real modern AEAD, ChaCha20-Poly1305, from scratch. Use it to encrypt and decrypt files with a passphrase, or read the source to see exactly how authenticated encryption works.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="https://github.com/pavanchow/cipherlock">View on GitHub</a>
-      <a class="btn btn-secondary" href="#how-it-works">How it works</a>
-    </div>
-  </header>
+<nav><div class="row">
+  <div class="brand"><span class="gem"></span>Cipherlock</div>
+  <div class="links">
+    <a href="#demo">Demo</a><a href="#how-it-works">How it works</a><a href="#usage">Usage</a>
+    <a class="gh" href="https://github.com/pavanchow/cipherlock">GitHub</a>
+  </div>
+</div></nav>
 
-  <section id="try-it">
-    <h2>Try it in your browser</h2>
-    <p style="text-align:center; font-size: 14.5px; color: var(--muted); margin: -14px 0 28px;">
-      This is a second, independent implementation of the same ChaCha20-Poly1305 construction, written in plain JavaScript and running entirely on this page. Nothing you type here leaves your browser.
-    </p>
-    <div class="demo-grid">
-      <div class="demo-panel">
-        <h3>Encrypt</h3>
-        <label for="demo-plaintext">Plaintext</label>
-        <textarea id="demo-plaintext" rows="4">the plans are in the drawer, meet at dawn</textarea>
-        <label for="demo-pass-enc">Passphrase</label>
-        <input type="text" id="demo-pass-enc" value="correct horse battery staple">
-        <div class="demo-row">
-          <button class="demo-btn demo-btn-primary" id="demo-encrypt-btn">Encrypt</button>
+<div class="hero">
+  <p class="eyebrow">Rust &middot; From scratch &middot; RFC 8439</p>
+  <h1>Authenticated encryption<br>you can actually read.</h1>
+  <p class="sub">Cipherlock is a single binary that implements a real modern AEAD, ChaCha20-Poly1305, from scratch. Encrypt and decrypt files with a passphrase, or read the source to see exactly how authenticated encryption works.</p>
+  <div class="cta-row">
+    <a class="btn btn-primary" href="https://github.com/pavanchow/cipherlock">View on GitHub</a>
+    <a class="btn btn-secondary" href="#how-it-works">How it works</a>
+  </div>
+</div>
+
+<section id="demo">
+  <h2>Try it in your browser</h2>
+  <p class="lead">This is a second, independent implementation of the same ChaCha20-Poly1305 construction, written in plain JavaScript and running entirely on this page. Nothing you type here leaves your browser.</p>
+  <div class="stage">
+    <div class="card">
+      <div class="demo-grid">
+        <div class="demo-panel">
+          <h3>ENCRYPT</h3>
+          <label for="demo-plaintext">Plaintext</label>
+          <textarea id="demo-plaintext" rows="4">the plans are in the drawer, meet at dawn</textarea>
+          <label for="demo-pass-enc">Passphrase</label>
+          <input type="text" id="demo-pass-enc" value="correct horse battery staple">
+          <div class="demo-row">
+            <button class="demo-btn demo-btn-primary" id="demo-encrypt-btn">Encrypt</button>
+          </div>
+          <div class="demo-status" id="demo-encrypt-status"></div>
+          <label>Salt (16 bytes)</label>
+          <div class="demo-field" id="demo-out-salt">&nbsp;</div>
+          <label>Nonce (12 bytes)</label>
+          <div class="demo-field" id="demo-out-nonce">&nbsp;</div>
+          <label>Ciphertext</label>
+          <div class="demo-field" id="demo-out-cipher">&nbsp;</div>
+          <label>Poly1305 tag (16 bytes)</label>
+          <div class="demo-field" id="demo-out-tag">&nbsp;</div>
         </div>
-        <div class="demo-status" id="demo-encrypt-status"></div>
-        <label>Salt (16 bytes)</label>
-        <div class="demo-field" id="demo-out-salt">&nbsp;</div>
-        <label>Nonce (12 bytes)</label>
-        <div class="demo-field" id="demo-out-nonce">&nbsp;</div>
-        <label>Ciphertext</label>
-        <div class="demo-field" id="demo-out-cipher">&nbsp;</div>
-        <label>Poly1305 tag (16 bytes)</label>
-        <div class="demo-field" id="demo-out-tag">&nbsp;</div>
-      </div>
-      <div class="demo-panel">
-        <h3>Decrypt</h3>
-        <label for="demo-pass-dec">Passphrase</label>
-        <input type="text" id="demo-pass-dec" value="correct horse battery staple">
-        <label for="demo-in-salt">Salt (hex)</label>
-        <input type="text" id="demo-in-salt">
-        <label for="demo-in-nonce">Nonce (hex)</label>
-        <input type="text" id="demo-in-nonce">
-        <label for="demo-in-cipher">Ciphertext (hex)</label>
-        <input type="text" id="demo-in-cipher">
-        <label for="demo-in-tag">Tag (hex)</label>
-        <input type="text" id="demo-in-tag">
-        <div class="demo-row">
-          <button class="demo-btn demo-btn-primary" id="demo-decrypt-btn">Decrypt</button>
-          <button class="demo-btn demo-btn-secondary" id="demo-tamper-btn">Tamper and decrypt</button>
+        <div class="demo-panel">
+          <h3>DECRYPT</h3>
+          <label for="demo-pass-dec">Passphrase</label>
+          <input type="text" id="demo-pass-dec" value="correct horse battery staple">
+          <label for="demo-in-salt">Salt (hex)</label>
+          <input type="text" id="demo-in-salt">
+          <label for="demo-in-nonce">Nonce (hex)</label>
+          <input type="text" id="demo-in-nonce">
+          <label for="demo-in-cipher">Ciphertext (hex)</label>
+          <input type="text" id="demo-in-cipher">
+          <label for="demo-in-tag">Tag (hex)</label>
+          <input type="text" id="demo-in-tag">
+          <div class="demo-row">
+            <button class="demo-btn demo-btn-primary" id="demo-decrypt-btn">Decrypt</button>
+            <button class="demo-btn demo-btn-secondary" id="demo-tamper-btn">Tamper and decrypt</button>
+          </div>
+          <div class="demo-status" id="demo-decrypt-status"></div>
+          <div class="demo-plaintext-out" id="demo-decrypt-out">&nbsp;</div>
         </div>
-        <div class="demo-status" id="demo-decrypt-status"></div>
-        <div class="demo-plaintext-out" id="demo-decrypt-out">&nbsp;</div>
       </div>
     </div>
-  </section>
+    <p class="caption">encrypt then decrypt to recover the text &middot; tamper flips one ciphertext bit</p>
+  </div>
+</section>
 
-  <section id="how-it-works">
-    <h2>How it works</h2>
-    <div class="steps">
-      <div class="card">
-        <span class="num">1</span>
-        <h3>ChaCha20</h3>
-        <p>A stream cipher that expands a 256 bit key, a 96 bit nonce, and a counter into a keystream using 20 rounds of add rotate xor quarter rounds. XORed with the plaintext, it produces the ciphertext.</p>
-      </div>
-      <div class="card">
-        <span class="num">2</span>
-        <h3>Poly1305</h3>
-        <p>A one time message authenticator. A fresh key is derived from ChaCha20 for every message, and the authenticator produces a 128 bit tag over the ciphertext and any associated data.</p>
-      </div>
-      <div class="card">
-        <span class="num">3</span>
-        <h3>AEAD</h3>
-        <p>The two are combined into AEAD_CHACHA20_POLY1305: encrypt, then authenticate. Decryption verifies the tag before releasing any plaintext, so a wrong passphrase or a tampered file fails loudly instead of silently.</p>
-      </div>
+<section id="how-it-works">
+  <h2>How it works</h2>
+  <p class="lead">Two primitives, combined encrypt then authenticate, so a wrong passphrase or a tampered file fails loudly.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="n">1</div>
+      <h3>ChaCha20</h3>
+      <p>A stream cipher that expands a 256 bit key, a 96 bit nonce, and a counter into a keystream using 20 rounds of add rotate xor quarter rounds. XORed with the plaintext, it produces the ciphertext.</p>
     </div>
-  </section>
+    <div class="step">
+      <div class="n">2</div>
+      <h3>Poly1305</h3>
+      <p>A one time message authenticator. A fresh key is derived from ChaCha20 for every message, and the authenticator produces a 128 bit tag over the ciphertext and any associated data.</p>
+    </div>
+    <div class="step">
+      <div class="n">3</div>
+      <h3>AEAD</h3>
+      <p>The two are combined into AEAD_CHACHA20_POLY1305, encrypt then authenticate. Decryption verifies the tag before releasing any plaintext.</p>
+    </div>
+  </div>
+</section>
 
-  <section id="usage">
-    <h2>Usage</h2>
-    <pre><code>cargo build --release
+<section id="usage">
+  <h2>Run it from the command line</h2>
+  <p class="lead">The same construction you just tried above, encrypting a real file on disk.</p>
+  <pre><code>cargo build --release
 
 cipherlock encrypt secret.txt secret.txt.lock --pass "correct horse battery staple"
 
 cipherlock decrypt secret.txt.lock secret.txt --pass "correct horse battery staple"</code></pre>
-  </section>
+</section>
 
-  <section id="proof">
-    <h2>Proof of correctness</h2>
-    <div class="note">
-      <strong>Every primitive is checked against the official RFC 8439 known answer test vectors:</strong> the ChaCha20 block function vector, the ChaCha20 encryption vector, the Poly1305 vector, and the full AEAD vector. All four pass under <code>cargo test</code>, alongside an encrypt then decrypt roundtrip test and a tamper detection test that flips a ciphertext byte and confirms decryption fails. This is a correct, teaching grade tool. It is not a substitute for an audited cryptography library in production.
-    </div>
-  </section>
+<section id="proof">
+  <h2>Proof of correctness</h2>
+  <div class="note">
+    <strong>Every primitive is checked against the official RFC 8439 known answer test vectors:</strong> the ChaCha20 block function vector, the ChaCha20 encryption vector, the Poly1305 vector, and the full AEAD vector. All four pass under <code>cargo test</code>, alongside an encrypt then decrypt roundtrip test and a tamper detection test that flips a ciphertext byte and confirms decryption fails. This is a correct, teaching grade tool. It is not a substitute for an audited cryptography library in production.
+  </div>
+</section>
 
-  <footer>
-    <p>By Pavan Nallamothu. <a href="https://github.com/pavanchow/cipherlock">Source on GitHub</a></p>
-  </footer>
-</div>
+<footer>
+  <p>By <span class="name">Pavan Nallamothu</span>.</p>
+  <p style="margin-top:12px"><a href="https://github.com/pavanchow/cipherlock">github.com/pavanchow/cipherlock</a></p>
+</footer>
 
 <script>
 (function () {
