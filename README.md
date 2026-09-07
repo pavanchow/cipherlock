@@ -1,3 +1,5 @@
+<img src="docs/logo.svg" alt="Cipherlock logo" width="96">
+
 **Cipherlock is a from scratch ChaCha20-Poly1305 authenticated encryption toolkit you can read and use.**
 
 Most tools that do authenticated encryption either shell out to OpenSSL or wrap a crypto library as a black box. Cipherlock implements ChaCha20-Poly1305 (RFC 8439) directly in Rust with no crypto crates, so the same small binary that encrypts and decrypts your files is also the clearest place to read exactly how a modern AEAD works: the ChaCha20 stream cipher, the Poly1305 authenticator, and the construction that combines them into one authenticated encryption scheme.

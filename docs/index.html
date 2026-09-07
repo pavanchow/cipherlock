@@ -7,6 +7,7 @@
 <meta name="description" content="Cipherlock is a single-binary toolkit implementing ChaCha20-Poly1305 authenticated encryption from scratch in Rust. Encrypt and decrypt files with a passphrase, and read exactly how the AEAD works.">
 <meta name="author" content="Pavan Nallamothu (pavanchow)">
 <link rel="canonical" href="https://pavanchow.github.io/cipherlock/">
+<link rel="icon" type="image/svg+xml" href="logo.svg">
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Cipherlock: ChaCha20-Poly1305 Authenticated Encryption You Can Read">
@@ -59,6 +60,12 @@
   @media(max-width:640px){nav .links a:not(.gh){display:none}}
 
   .hero{padding:70px 0 30px;text-align:center}
+  .howto{margin:18px auto 6px;max-width:640px;border:1px solid var(--line,rgba(128,128,128,.25));border-radius:12px;padding:2px 16px}
+  .howto>summary{cursor:pointer;font-weight:600;padding:12px 0;list-style:none}
+  .howto>summary::-webkit-details-marker{display:none}
+  .howto>summary::before{content:"\25B8";display:inline-block;margin-right:8px;color:var(--accent);transition:transform .15s}
+  .howto[open]>summary::before{transform:rotate(90deg)}
+  .howto p{margin:0 0 14px;color:var(--muted);line-height:1.6}
   .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
   h1{font-size:clamp(36px,6.4vw,60px);line-height:1.06;letter-spacing:-.03em;font-weight:680;margin:18px 0 0}
   .hero p.sub{max-width:640px;margin:24px auto 0;font-size:clamp(17px,2.1vw,20px);color:var(--muted)}
@@ -144,6 +151,7 @@
 </div></nav>
 
 <div class="hero">
+  <img src="logo.svg" alt="Cipherlock logo" width="72" height="72">
   <p class="eyebrow">Rust &middot; From scratch &middot; RFC 8439</p>
   <h1>Authenticated encryption<br>you can actually read.</h1>
   <p class="sub">Cipherlock is a single binary that implements a real modern AEAD, ChaCha20-Poly1305, from scratch. Encrypt and decrypt files with a passphrase, or read the source to see exactly how authenticated encryption works.</p>
@@ -156,6 +164,10 @@
 <section id="demo">
   <h2>Try it in your browser</h2>
   <p class="lead">This is a second, independent implementation of the same ChaCha20-Poly1305 construction, written in plain JavaScript and running entirely on this page. Nothing you type here leaves your browser.</p>
+  <details class="howto">
+    <summary>How to use this playground</summary>
+    <p>Type a message and a passphrase on the left and press <strong>Encrypt</strong> to get the salt, nonce, ciphertext, and authentication tag. Copy them into the right panel with the same passphrase and press <strong>Decrypt</strong> to recover the plaintext. Change one byte of the ciphertext or the passphrase and decryption fails with an authentication error, exactly as a real AEAD should.</p>
+  </details>
   <div class="stage">
     <div class="card">
       <div class="demo-grid">
