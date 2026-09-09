@@ -3,40 +3,32 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Cipherlock: ChaCha20-Poly1305 authenticated encryption you can read</title>
-<meta name="description" content="Cipherlock is a single-binary toolkit implementing ChaCha20-Poly1305 authenticated encryption from scratch in Rust. Encrypt and decrypt files with a passphrase, and read exactly how the AEAD works.">
-<meta name="author" content="Pavan Nallamothu (pavanchow)">
-<meta name="keywords" content="ChaCha20, Poly1305, ChaCha20-Poly1305, AEAD, authenticated encryption, RFC 8439, file encryption, stream cipher, message authentication, cryptography, Rust, from scratch crypto, Pavan Nallamothu, pavanchow">
+<title>Cipherlock: ChaCha20-Poly1305 encryption in Rust | Pavan Nallamothu</title>
+<meta name="description" content="Cipherlock by Pavan Nallamothu: ChaCha20-Poly1305 authenticated encryption from scratch in Rust. Encrypt and decrypt files with a passphrase and read how the AEAD works.">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="author" content="Pavan Nallamothu">
+<meta name="keywords" content="cipherlock, ChaCha20, Poly1305, ChaCha20-Poly1305, AEAD, authenticated encryption, RFC 8439, file encryption, stream cipher, message authentication, cryptography in Rust, from scratch crypto, encrypt file with passphrase, cipherlock rust, Pavan Nallamothu, pavanchow">
 <link rel="canonical" href="https://pavanchow.github.io/cipherlock/">
 <link rel="icon" type="image/svg+xml" href="logo.svg">
-
+<link rel="author" href="https://github.com/pavanchow">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Cipherlock: ChaCha20-Poly1305 Authenticated Encryption You Can Read">
-<meta property="og:description" content="A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors.">
+<meta property="og:site_name" content="Pavan Nallamothu">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="Cipherlock: ChaCha20-Poly1305 encryption in Rust | Pavan Nallamothu">
+<meta property="og:description" content="A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors. By Pavan Nallamothu.">
 <meta property="og:url" content="https://pavanchow.github.io/cipherlock/">
-
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Cipherlock: ChaCha20-Poly1305 Authenticated Encryption You Can Read">
+<meta property="og:image" content="https://pavanchow.github.io/cipherlock/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Cipherlock by Pavan Nallamothu">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@pavanchow">
+<meta name="twitter:creator" content="@pavanchow">
+<meta name="twitter:title" content="Cipherlock: ChaCha20-Poly1305 encryption in Rust | Pavan Nallamothu">
 <meta name="twitter:description" content="A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors.">
-
+<meta name="twitter:image" content="https://pavanchow.github.io/cipherlock/og-image.png">
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "Cipherlock",
-  "applicationCategory": "SecurityApplication",
-  "softwareVersion": "0.1.0",
-  "operatingSystem": "Linux, macOS, Windows",
-  "description": "A single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors.",
-  "author": {
-    "@type": "Person",
-    "name": "Pavan Nallamothu"
-  },
-  "url": "https://pavanchow.github.io/cipherlock/",
-  "codeRepository": "https://github.com/pavanchow/cipherlock",
-  "license": "https://opensource.org/licenses/MIT",
-  "programmingLanguage": "Rust"
-}
+{"@context":"https://schema.org","@graph":[{"@type":"SoftwareApplication","@id":"https://pavanchow.github.io/cipherlock/#app","name":"Cipherlock","applicationCategory":"SecurityApplication","operatingSystem":"Linux, macOS, Windows","softwareVersion":"0.1.0","description":"Cipherlock is a single-binary ChaCha20-Poly1305 authenticated encryption toolkit, implemented from scratch in Rust and proven against the RFC 8439 test vectors. It encrypts and decrypts files with a passphrase and shows exactly how the AEAD construction works.","url":"https://pavanchow.github.io/cipherlock/","image":"https://pavanchow.github.io/cipherlock/og-image.png","programmingLanguage":"Rust","codeRepository":"https://github.com/pavanchow/cipherlock","license":"https://opensource.org/licenses/MIT","datePublished":"2026-08-21","keywords":"ChaCha20, Poly1305, ChaCha20-Poly1305, AEAD, authenticated encryption, RFC 8439, file encryption, stream cipher, message authentication, Rust","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"featureList":["ChaCha20-Poly1305 AEAD implemented from scratch","Encrypt and decrypt files with a passphrase","Verified against the RFC 8439 test vectors","Single self-contained binary","In-browser demo of encryption and decryption"],"author":{"@id":"https://github.com/pavanchow#person"},"publisher":{"@id":"https://github.com/pavanchow#person"}},{"@type":"Person","@id":"https://github.com/pavanchow#person","name":"Pavan Nallamothu","alternateName":"pavanchow","url":"https://github.com/pavanchow","jobTitle":"Software Engineer and Security Researcher","knowsAbout":["Rust","cryptography","authenticated encryption","ChaCha20-Poly1305","AEAD","security engineering"],"sameAs":["https://github.com/pavanchow","https://hackerone.com/pavanchow"]},{"@type":"WebSite","name":"Cipherlock by Pavan Nallamothu","url":"https://pavanchow.github.io/cipherlock/","author":{"@id":"https://github.com/pavanchow#person"}},{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Pavan Nallamothu","item":"https://github.com/pavanchow"},{"@type":"ListItem","position":2,"name":"Cipherlock","item":"https://pavanchow.github.io/cipherlock/"}]},{"@type":"WebPage","url":"https://pavanchow.github.io/cipherlock/","name":"Cipherlock: ChaCha20-Poly1305 encryption in Rust | Pavan Nallamothu","isPartOf":{"@type":"WebSite","url":"https://pavanchow.github.io/cipherlock/"},"about":{"@id":"https://pavanchow.github.io/cipherlock/#app"},"author":{"@id":"https://github.com/pavanchow#person"},"inLanguage":"en"}]}
 </script>
 
 <style>
@@ -163,10 +155,6 @@
   footer{padding:56px 0;border-top:1px solid var(--line);text-align:center;color:var(--muted)}
   footer .name{color:var(--ink);font-weight:600}
 </style>
-<link rel="author" href="https://github.com/pavanchow">
-<script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Pavan Nallamothu","alternateName":"pavanchow","url":"https://github.com/pavanchow","sameAs":["https://github.com/pavanchow","https://hackerone.com/pavanchow"]}
-</script>
 </head>
 <body>
 <noscript>
@@ -330,6 +318,17 @@ test result: <span class="ok">ok</span>. 12 passed; 0 failed; 0 ignored; 0 measu
 <footer>
   <p>By <span class="name">Pavan Nallamothu</span>.</p>
   <p style="margin-top:12px"><a href="https://github.com/pavanchow/cipherlock">github.com/pavanchow/cipherlock</a></p>
+  <nav class="more-tools" aria-label="More open-source tools by Pavan Nallamothu" style="margin-top:20px">
+    <p style="font-weight:600">More open-source tools by Pavan Nallamothu</p>
+    <p>
+      <a href="https://pavanchow.github.io/veilproof/">Veilproof, a zero-knowledge proof system</a> ·
+      <a href="https://pavanchow.github.io/ironchain/">Ironchain, a post-quantum proof-of-work blockchain</a> ·
+      <a href="https://pavanchow.github.io/gatekeeper/">Gatekeeper, an auth server in Rust</a> ·
+      <a href="https://pavanchow.github.io/unweave/">Unweave, an EVM bytecode disassembler</a> ·
+      <a href="https://pavanchow.github.io/cocoon/">Cocoon, a rootless Linux container runtime</a> ·
+      <a href="https://github.com/pavanchow">All projects on GitHub</a>
+    </p>
+  </nav>
 </footer>
 
 <script>
