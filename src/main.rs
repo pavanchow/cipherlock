@@ -18,24 +18,38 @@ enum Command {
     Encrypt {
         input: PathBuf,
         output: PathBuf,
+        /// Passphrase. If omitted, read from the CIPHERLOCK_PASS env var so it
+        /// never appears in the process argument list.
         #[arg(long = "pass")]
-        pass: String,
+        pass: Option<String>,
     },
     /// Decrypt a file with a passphrase
     Decrypt {
         input: PathBuf,
         output: PathBuf,
+        /// Passphrase. If omitted, read from the CIPHERLOCK_PASS env var so it
+        /// never appears in the process argument list.
         #[arg(long = "pass")]
-        pass: String,
+        pass: Option<String>,
     },
+}
+
+fn resolve_pass(pass: Option<String>) -> Result<String, String> {
+    pass
+        .or_else(|| std::env::var("CIPHERLOCK_PASS").ok())
+        .ok_or_else(|| "no passphrase: pass --pass or set CIPHERLOCK_PASS".to_string())
 }
 
 fn main() -> ExitCode {
     let cli = Cli::parse();
 
     let result = match cli.command {
-        Command::Encrypt { input, output, pass } => run_encrypt(&input, &output, &pass),
-        Command::Decrypt { input, output, pass } => run_decrypt(&input, &output, &pass),
+        Command::Encrypt { input, output, pass } => {
+            resolve_pass(pass).and_then(|p| run_encrypt(&input, &output, &p))
+        }
+        Command::Decrypt { input, output, pass } => {
+            resolve_pass(pass).and_then(|p| run_decrypt(&input, &output, &p))
+        }
     };
 
     match result {
