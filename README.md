@@ -6,6 +6,8 @@ Cipherlock is a from-scratch ChaCha20-Poly1305 authenticated encryption toolkit 
 
 **[Live demo](https://pavanchow.github.io/cipherlock/)** · MIT licensed · pure Rust
 
+Built from scratch by [Pavan Nallamothu](https://pavanchow.github.io/) ([LinkedIn](https://www.linkedin.com/in/pavanchow/), [GitHub](https://github.com/pavanchow)).
+
 ## What it does
 
 - Encrypts and decrypts files with a passphrase.
